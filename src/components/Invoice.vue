@@ -1,11 +1,13 @@
 <script setup>
 import {ref,onBeforeMount} from 'vue'
 import json from '../invoice.json'
+import { jsPDF } from "jspdf";
 
+const invoiceDownload = ref(null)
 
 const subTotal = ref(0)
 const discount = ref(0)
-
+const DownloadComp = ref(null)
 const printInvoice = () => {
    window.print()
 }
@@ -18,7 +20,8 @@ const calculation = ()=>{
 }
 
 const pdfDownload = ()=>{
-
+    let doc = new jsPDF('landscape','pt');
+    doc.html(invoiceDownload.value, {x:10, y:30,height:'1200', callback: function (doc) { doc.save('pdf'+".pdf"); }});
 }
 
 onBeforeMount(()=>{
@@ -33,7 +36,8 @@ onBeforeMount(()=>{
             <button  @click="printInvoice" class="no-print">Pdf Print</button>
             <button  @click="pdfDownload" class="no-print">Pdf Download</button>
         </div>
-        <div class="main-container printable">
+   
+        <div class="main-container printable"  ref="invoiceDownload">
             <div class="header">
                 <div class="company-info">
                     <h2>{{ json.invoice.companyInfo.compnayName }} </h2>
@@ -130,10 +134,13 @@ onBeforeMount(()=>{
                         </tr>
                     </table>
 
-                    <h4>Terms & Conditions</h4>
-                    <p>
-                        {{ json.invoice.terms_condition }}
-                    </p>
+                    
+                    <div style="width:300px;text-align: justify;">
+                        <h4>Terms & Conditions</h4>
+                        <p>
+                            {{ json.invoice.terms_condition }}
+                        </p>
+                    </div>
                 </div>
                 <div class="total-invoice">
                     <table>
@@ -181,7 +188,7 @@ onBeforeMount(()=>{
    border: 2px solid #00005C;
    margin:20px;
    padding: 10px;
-   width: 1000px;
+   width: 800px;
    margin: auto;
    margin-top: 20px;
 }
@@ -272,7 +279,7 @@ onBeforeMount(()=>{
 
 .total-invoice table{
     border: 4px solid #00005C;
-    width: 400px;
+    width: 250px;
 }
 
 .total-invoice table tr {
@@ -286,7 +293,7 @@ onBeforeMount(()=>{
 
 .download{
     text-align: right;
-    width: 1000px;
+    width: 830px;
 
     margin: auto;
     
