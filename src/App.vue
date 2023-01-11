@@ -10,7 +10,7 @@ const buttonHandler = () => {
 
 <template>
   <div class="main">
-       <div class="btn">
+       <div class="btn no-print">
         <button v-if="invoiceToggle===false" @click="buttonHandler">View Invoice</button> 
         <button v-if="invoiceToggle===true" @click="buttonHandler">Hide Invoice</button>
        </div>

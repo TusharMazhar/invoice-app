@@ -2,6 +2,7 @@
 import {ref,onBeforeMount} from 'vue'
 import json from '../invoice.json'
 
+
 const subTotal = ref(0)
 const discount = ref(0)
 
@@ -16,6 +17,10 @@ const calculation = ()=>{
     })
 }
 
+const pdfDownload = ()=>{
+
+}
+
 onBeforeMount(()=>{
     calculation()
 })
@@ -25,10 +30,10 @@ onBeforeMount(()=>{
 <template>
     <div>
         <div class="download">
-            <button  @click="printInvoice">Pdf Print</button>
-            <button  @click="printInvoice">Pdf Download</button>
+            <button  @click="printInvoice" class="no-print">Pdf Print</button>
+            <button  @click="pdfDownload" class="no-print">Pdf Download</button>
         </div>
-        <div class="main-container">
+        <div class="main-container printable">
             <div class="header">
                 <div class="company-info">
                     <h2>{{ json.invoice.companyInfo.compnayName }} </h2>
@@ -292,5 +297,7 @@ onBeforeMount(()=>{
     width:120px;
     margin:5px
 }
+
+
 
 </style>
