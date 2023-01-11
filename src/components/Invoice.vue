@@ -1,158 +1,169 @@
 <script setup>
+import {ref,onBeforeMount} from 'vue'
+import json from '../invoice.json'
+
+const subTotal = ref(0)
+const discount = ref(0)
+
+const printInvoice = () => {
+   window.print()
+}
+
+const calculation = ()=>{
+    json.invoice.invoice_details.products.forEach(item=>{
+        subTotal.value += parseFloat(item.price)*parseFloat(item.qty)-parseFloat(item.discount)
+        discount.value += parseFloat(item.discount)
+    })
+}
+
+onBeforeMount(()=>{
+    calculation()
+})
 
 </script>
 
 <template>
-    <div class="main-container">
-        <div class="header">
-            <div class="company-info">
-                <h2>DJ Electronics</h2>
-                <p>
-                    219/13,South Pirerbug Vangga Bridge <br>
-                    Mirpur-1,Dhaka <br>
-                    60 Feet Road <br>
-                    Mobile: +8801787373498 <br>
-                    E-mail: tusharmazhartalukdar@gmail.com  <br>
-                </p>
-            </div>
-            <div class="logo">
-                <img src="https://i.pinimg.com/originals/08/02/3d/08023da2fb373a82e518bad747519ced.png" alt="">
-            </div>
+    <div>
+        <div class="download">
+            <button  @click="printInvoice">Pdf Print</button>
+            <button  @click="printInvoice">Pdf Download</button>
         </div>
-     
-        <div class="customer-container">
-            <div>
-                <h2>Billing To</h2>
-                <h4>Ataur Rahman Belal Talukdar</h4>
-                <p>
-                    218/19,South Pirerbug Vangga Bridge <br>
-                    Mirpur-11,Dhaka <br>
-                    Fatabill Road <br>
-                    Mobile: +8801787456565 <br>
-                    E-mail: belaltalukdar@gmail.com  <br>
-                </p>
+        <div class="main-container">
+            <div class="header">
+                <div class="company-info">
+                    <h2>{{ json.invoice.companyInfo.compnayName }} </h2>
+                    <p>
+                        {{ json.invoice.companyInfo.companyAddress.area }} <br>
+                        {{ json.invoice.companyInfo.companyAddress.thana }},{{ json.invoice.companyInfo.companyAddress.division }} <br>
+                        {{ json.invoice.companyInfo.companyAddress.road }} <br>
+                        Mobile: {{ json.invoice.companyInfo.companyAddress.mobile }} <br>
+                        E-mail: {{ json.invoice.companyInfo.companyAddress.email }}  <br>
+                    </p>
+                </div>
+                <div class="logo">
+                    <img :src="json.invoice.companyInfo.compnayLogo" alt="">
+                </div>
             </div>
-            <div class="invoice">
-                <table>
+        
+            <div class="customer-container">
+                <div>
+                    <h2>Billing To</h2>
+                    <h4>{{json.invoice.customerInfo.customerName}}</h4>
+                    <p>
+                        {{json.invoice.customerInfo.area}} <br>
+                        {{json.invoice.customerInfo.thana}},{{json.invoice.customerInfo.division}} <br>
+                        {{json.invoice.customerInfo.road}} <br>
+                        Mobile: {{json.invoice.customerInfo.mobile}} <br>
+                        E-mail: {{json.invoice.customerInfo.email}}  <br>
+                    </p>
+                </div>
+                <div class="invoice">
+                    <table>
+                        <tr>
+                            <td>Invoice No</td>
+                            <td>:</td>
+                            <td>{{json.invoice.invoice_details.invoice_no}}</td>
+                        </tr>
+                        <tr>
+                            <td>Due Date</td>
+                            <td>:</td>
+                            <td>{{json.invoice.invoice_details.due_date}}</td>
+                        </tr>
+                        <tr>
+                            <td>Bill No</td>
+                            <td>:</td>
+                            <td>{{json.invoice.invoice_details.bill_no}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="product-container">
+                <table class="table-item" border="1" cellspacing="0">
                     <tr>
-                        <td>Invoice No</td>
-                        <td>:</td>
-                        <td>#0005485</td>
+                        <th>Sl. No</th>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Discount</th>
+                        <th>Total</th>
                     </tr>
-                    <tr>
-                        <td>Due Date</td>
-                        <td>:</td>
-                        <td>10 January 2023</td>
+                    <tr v-for="item in json.invoice.invoice_details.products" :key="item.sl_no">
+                        <td>{{ item.sl_no }}</td>
+                        <td>{{ item.item }}</td>
+                        <td>{{ parseFloat(item.price) }} Taka</td>
+                        <td>{{ parseFloat(item.qty) }}</td>
+                        <td>{{ parseFloat(item.discount) }} Taka</td>
+                        <td>{{ parseFloat(item.price)*parseFloat(item.qty)-parseFloat(item.discount) }} Taka</td>
                     </tr>
-                    <tr>
-                        <td>Bill No</td>
-                        <td>:</td>
-                        <td>56756</td>
-                    </tr>
+          
                 </table>
             </div>
-        </div>
 
-        <div class="product-container">
-            <table class="table-item" border="1" cellspacing="0">
-                <tr>
-                    <th>Sl. No</th>
-                    <th>Item</th>
-                    <th>Price</th>
-                    <th>Qty</th>
-                    <th>Discount</th>
-                    <th>Total</th>
-                </tr>
-                <tr>
-                    <td>1.</td>
-                    <td>Blutooth Headphone</td>
-                    <td>3000 Taka</td>
-                    <td>5</td>
-                    <td>1000 Taka</td>
-                    <td>14000 Taka</td>
-                </tr>
-                <tr>
-                    <td>2.</td>
-                    <td>Blutooth Headphone</td>
-                    <td>3000 Taka</td>
-                    <td>5</td>
-                    <td>1000 Taka</td>
-                    <td>14000 Taka</td>
-                </tr>
-                <tr>
-                    <td>3.</td>
-                    <td>Blutooth Headphone</td>
-                    <td>3000 Taka</td>
-                    <td>5</td>
-                    <td>1000 Taka</td>
-                    <td>14000 Taka</td>
-                </tr>
-            </table>
-        </div>
+            <div class="footer">
+                <!-- <div>
+                    <h4> Thank You</h4>
+                    <p></p>
+                </div> -->
+                <div class="payment-info">
+                    <h4>Payment Information</h4>
+                    <table>
+                        <tr>
+                            <td>A/C Type</td>
+                            <td>:</td>
+                            <td> {{json.invoice.paymentInfo.account_type}}</td>
+                        </tr>
+                        <tr>
+                            <td>A/C Number</td>
+                            <td>:</td>
+                            <td> {{json.invoice.paymentInfo.account_number}}</td>
+                        </tr>
+                        <tr>
+                            <td>A/C Name</td>
+                            <td>:</td>
+                            <td> {{json.invoice.paymentInfo.account_name}}</td>
+                        </tr>
+                    </table>
 
-        <div class="footer">
-            <!-- <div>
-                <h4> Thank You</h4>
-                <p></p>
-            </div> -->
-            <div class="payment-info">
-                <h4>Payment Information</h4>
-                <table>
-                    <tr>
-                        <td>A/C Type</td>
-                        <td>:</td>
-                        <td> Bank</td>
-                    </tr>
-                    <tr>
-                        <td>A/C Number</td>
-                        <td>:</td>
-                        <td> 244-4546-56765</td>
-                    </tr>
-                    <tr>
-                        <td>A/C Name</td>
-                        <td>:</td>
-                        <td> Belal Talukdar</td>
-                    </tr>
-                </table>
-
-                <h4>Terms & Conditions</h4>
-                <p>
-                    Purchasing products can be changed within 7 days after buying. But, if products damage somehow then these will not changeable.
-                </p>
-            </div>
-            <div class="total-invoice">
-                <table>
-                    <tr>
-                        <td>Sub Total</td>
-                        <td>:</td>
-                        <td>456756 Taka</td>
-                    </tr>
-                    <tr>
-                        <td>Discount</td>
-                        <td>:</td>
-                        <td>4544 Taka</td>
-                    </tr>
-                    <tr>
-                        <td>Tax</td>
-                        <td>:</td>
-                        <td>4565 Taka</td>
-                    </tr>
-                    <tr>
-                        <td>Total</td>
-                        <td>:</td>
-                        <td>4565565 Taka</td>
-                    </tr>
-                    <tr>
-                        <td>Paid</td>
-                        <td>:</td>
-                        <td>4565565 Taka</td>
-                    </tr>
-                    <tr>
-                        <td>Due</td>
-                        <td>:</td>
-                        <td>0.0 Taka</td>
-                    </tr>
-                </table>
+                    <h4>Terms & Conditions</h4>
+                    <p>
+                        {{ json.invoice.terms_condition }}
+                    </p>
+                </div>
+                <div class="total-invoice">
+                    <table>
+                        <tr>
+                            <td>Sub Total</td>
+                            <td>:</td>
+                            <td>{{ subTotal }} Taka</td>
+                        </tr>
+                        <tr>
+                            <td>Discount</td>
+                            <td>:</td>
+                            <td>{{ discount }} Taka</td>
+                        </tr>
+                        <tr>
+                            <td>Tax(2%)</td>
+                            <td>:</td>
+                            <td>{{ (subTotal-discount)*2/100 }} Taka</td>
+                        </tr>
+                        <tr>
+                            <td style="color:green;fontWeight:bold">Total</td>
+                            <td>:</td>
+                            <td style="color:green;fontWeight:bold">{{ (subTotal-discount)+ (subTotal-discount)*2/100 }} Taka</td>
+                        </tr>
+                        <tr>
+                            <td>Paid</td>
+                            <td>:</td>
+                            <td>{{ parseFloat(json.invoice.paymentInfo.amount_paid) }} Taka</td>
+                        </tr>
+                        <tr>
+                            <td>Due</td>
+                            <td>:</td>
+                            <td>{{ (subTotal-discount)+ (subTotal-discount)*2/100 - parseFloat(json.invoice.paymentInfo.amount_paid) }} Taka</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -165,7 +176,7 @@
    border: 2px solid #00005C;
    margin:20px;
    padding: 10px;
-   width: 1200px;
+   width: 1000px;
    margin: auto;
    margin-top: 20px;
 }
@@ -174,7 +185,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    background-color: #00005C;
+    background-color: #00005C !important;
     color:rgb(255, 255, 255);
 }
 
@@ -255,7 +266,8 @@
 }
 
 .total-invoice table{
-    border: 4px solid #00005C
+    border: 4px solid #00005C;
+    width: 400px;
 }
 
 .total-invoice table tr {
@@ -266,4 +278,19 @@
     padding: 5px;
     font-weight: bold;
 }
+
+.download{
+    text-align: right;
+    width: 1000px;
+
+    margin: auto;
+    
+}
+.download button{
+    padding: 5px;
+    cursor: pointer;
+    width:120px;
+    margin:5px
+}
+
 </style>

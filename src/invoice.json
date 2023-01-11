@@ -1,0 +1,76 @@
+{
+    "invoice":{
+        "companyInfo": {
+            "compnayName":"DJ Electronics",
+            "compnayLogo":"https://i.pinimg.com/originals/08/02/3d/08023da2fb373a82e518bad747519ced.png",
+            "companyAddress":{
+                "division":"Dhaka",
+                "thana":"Mirpur-1",
+                "road":"60 Feet Road",
+                "area":"219/13,South Pirerbug Vangga Bridge",
+                "mobile":"+8801787373498",
+                "email":"tusharmazhartalukdar@gmail.com"
+            }
+
+        },
+        "customerInfo":{
+            "customerName":"Ataur Rahman Belal Talukdar",
+            "division":"Dhaka",
+            "thana":"Mirpur-11",
+            "road":" Fatabill Road",
+            "area":"219/13,South Pirerbug Vangga Bridge",
+            "mobile":"+8801787354654",
+            "email":"belaltalukdar@gmail.com"
+
+        },
+        "invoice_details":{
+            "invoice_no":"#0005485",
+            "due_date":"10 January 2023",
+            "bill_no":"56756",
+            "products":[
+                {
+                    "sl_no":"1",
+                    "item":"Headphone wireless",
+                    "qty":"3",
+                    "price":"550",
+                    "discount":"50"
+                },
+                {
+                    "sl_no":"2",
+                    "item":"Mouse",
+                    "qty":"10",
+                    "price":"450",
+                    "discount":"30"
+                },
+                {
+                    "sl_no":"3",
+                    "item":"Keyboard",
+                    "qty":"7",
+                    "price":"350",
+                    "discount":"20"
+                },
+                {
+                    "sl_no":"4",
+                    "item":"Laptop wireless",
+                    "qty":"8",
+                    "price":"45000",
+                    "discount":"500"
+                },{
+                    "sl_no":"5",
+                    "item":"Air condition",
+                    "qty":"11",
+                    "price":"85000",
+                    "discount":"2000"
+                }
+            ]
+
+        },
+        "paymentInfo":{
+            "account_type":"Bank",
+            "account_number":"244-4546-56765",
+            "account_name":"Belal Talukdar",
+            "amount_paid":"1324368"
+        },
+        "terms_condition":"Purchasing products can be changed within 7 days after buying. But, if products damage somehow then these will not changeable"
+    }
+}
